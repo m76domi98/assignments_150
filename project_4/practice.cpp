@@ -44,6 +44,40 @@ void assign( char *str1, char const *str2 ){
     }
     str1[i] = '\0';
 }
+unsigned int distance( char const *str1, char const *str2 ){
+    // base case
+    if (*str1 =='\0'){
+        int lnh = 0;
+        while (str2[lnh]!= '\0'){
+            ++lnh;
+        }
+        return lnh;
+    }
+    if (*str2 =='\0'){
+        int lnh = 0;
+        while (str2[lnh]!= '\0'){
+            ++lnh;
+        }
+        return lnh;
+    }
+
+    if (*str1== *str2){
+        return distance (str1+1, str2+1);
+        // first two ch are the same so i need to check the next
+    }
+
+    // if first ch are diff, calc min distance
+    int sub = distance (str1+1, str2+1);
+    int ins = distant (str1, str2+1);
+    int del = distance (str1+1, str2);
+
+    unsigned int minDis = sub;
+    minDis = (ins < minDis) ? insert : minDis;
+    minDis = (del < minDis)? del:minDis;
+
+
+
+}
 int main(){
     char test_string[21] {"Hello WOrld"};
     std::cout << "The length of " << test_string << " is " << length(test_string) << std::endl;
