@@ -35,6 +35,15 @@ int compare( char const *str1, char const *str2 ){
         return 1; //only other option now is that str is shorter so its bf fo return 1
     }
 }
+
+void assign( char *str1, char const *str2 ){
+    int i = 0;
+    while (str2[i] != '\0'){
+        str1[i] = str2[i];
+        i++;
+    }
+    str1[i] = '\0';
+}
 int main(){
     char test_string[21] {"Hello WOrld"};
     std::cout << "The length of " << test_string << " is " << length(test_string) << std::endl;
