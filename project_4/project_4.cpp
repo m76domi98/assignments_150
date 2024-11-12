@@ -12,10 +12,10 @@ std::size_t length( char const *a ){
 int compare( char const *str1, char const *str2 ){
     int k {0};
 
-    while ((str[k] != '\0') && (str[2] != '\0')){
-        if (str1[k] > str2[k]){
-            return -1; // this means that str 2 comes after str 1 so i can return -1
-        } else if (str1[k] < str2[k]) {
+    while ((str1[k] != '\0') && (str[k] != '\0')){
+        if (str1[k] < str2[k]){
+            return -1; // str1 comes before str2
+        } else if (str1[k] > str2[k]) {
             return 1;// this means that str 1 comes afyer str 2 so i can return 1
         }
         k++;
@@ -42,7 +42,7 @@ void assign( char *str1, char const *str2 ){
         str1[i] = str2[i];
         i++;
     }
-    str1[i] = '\0';
+
 }
 unsigned int distance( char const *str1, char const *str2 ){
     // base case
@@ -72,18 +72,23 @@ unsigned int distance( char const *str1, char const *str2 ){
     int del = distance (str1+1, str2);
 
     unsigned int minDis = sub;
-    minDis = (ins < minDis) ? insert : minDis;
+    minDis = (ins < minDis) ? ins: minDis;
     minDis = (del < minDis)? del:minDis;
 
 
 
 }
 
-std::size_t is_sorted( char *array[], std::size_t capacity ){
-    
+std::size_t is_sorted (char* array[], std::size_t capacity){
+    for (std::size_t i {1}; i < capacity; i++){
+        if (compare(array[i-1], array[i] > 0)){
+            return i;
+        }
+    }
+    return capacity;
 }
 int main(){
-    char test_string[21] {"Hello WOrld"};
+    char test_string[21] {"Hello WOrld "};
     std::cout << "The length of " << test_string << " is " << length(test_string) << std::endl;
 
     return 0;
