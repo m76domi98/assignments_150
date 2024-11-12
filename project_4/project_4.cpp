@@ -116,6 +116,22 @@ void insertion_sort ( const char *array[], std::size_t capacity){
     }
 }
 
+std::size_t remove_duplicates (char *array[], std::size_t capacity){
+    if (capacity== 0){
+        return  0;
+    }
+
+    std::size_t unique_c = 1;
+    
+    for (std::size_t i {1}; i < capacity; ++i){
+        // if the element is diff from prev then i move it
+        if (array[i]!= array[i-1]){
+            array[unique_c] = array[i];
+            ++unique_c;
+        }
+    }
+    return unique_c;
+}
 int main(){
     char test_string[21] {"Hello WOrld "};
     std::cout << "The length of " << test_string << " is " << length(test_string) << std::endl;
