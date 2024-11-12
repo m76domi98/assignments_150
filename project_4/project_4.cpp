@@ -49,29 +49,21 @@ void assign( char *str1, char const *str2 ){
 unsigned int distance( char const *str1, char const *str2 ){
     // base case
     if (*str1 =='\0'){
-        int lnh = 0;
-        while (str2[lnh]!= '\0'){
-            ++lnh;
-        }
-        return lnh;
+        return (length(*str2));
         // i could also just use the length function i used before
     }
-    if (*str2 =='\0'){
-        int lnh = 0;
-        while (str2[lnh]!= '\0'){
-            ++lnh;
-        }
-        return lnh;
-    }
+    else if (*str2 =='\0'){
+        return (length (*str1));
 
-    if (*str1== *str2){
+    } else if (*str1== *str2){
         return distance (str1+1, str2+1);
+
         // first two ch are the same so i need to check the next
-    }
+    }else{
 
     // if first ch are diff, calc min distance
     int sub = distance (str1+1, str2+1);
-    int ins = distant (str1, str2+1);
+    int ins = distance (str1, str2+1);
     int del = distance (str1+1, str2);
 
     unsigned int minDis = sub;
@@ -79,7 +71,7 @@ unsigned int distance( char const *str1, char const *str2 ){
     minDis = (del < minDis)? del:minDis;
 
     return minDis+1;
-
+    }
 
 }
 
@@ -131,6 +123,40 @@ std::size_t remove_duplicates (char *array[], std::size_t capacity){
         }
     }
     return unique_c;
+}
+
+// im gonna make a function to use in my find function that checls if the strings are equal
+bool equalS (const char * str1, const char *str2){
+    while (*str1 && *str2){
+        if (*str1 != *str2){
+            return false;
+        }
+        str1++;
+        str2++;
+    }
+    return (*str1 == "\0") && (*str2 == "\0");
+}
+
+std::size_t find (char * array[], std::size_t capacity, char const *str){
+    std::size_t b_index = 0;
+
+    unsigned int min_dist = ~0u; // max unigned int value (4294967295)
+
+    for (std::size_t i {0}; i < capacity; i++){
+        if (equalS(array[i], str)){
+            return i; 
+            // then the string is found at index i
+        }
+
+        unsigned int c_dist = distance (array[i], str);
+
+        if (c_dist < min_dist){
+            min_dist = c_dist;
+            b_index = 1;
+        }
+    }
+
+    return b_index;
 }
 int main(){
     char test_string[21] {"Hello WOrld "};
