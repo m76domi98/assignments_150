@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 std::size_t length( char const *a ){
     std::size_t count = 0;
 
@@ -108,6 +109,12 @@ void insert(char *array[], std::size_t capacity){
     array[i+1] = val;
 }
 
+void insertion_sort ( const char *array[], std::size_t capacity){
+    for (std::size_t i =1; i < capacity; ++i){
+        // insert every elememnt for inidice 1 to cap -1
+        insert (array, i+1)
+    }
+}
 
 int main(){
     char test_string[21] {"Hello WOrld "};
