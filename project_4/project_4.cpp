@@ -12,7 +12,7 @@ std::size_t length( char const *a ){
 int compare( char const *str1, char const *str2 ){
     int k {0};
 
-    while ((str1[k] != '\0') && (str[k] != '\0')){
+    while ((str1[k] != '\0') && (str2[k] != '\0')){
         if (str1[k] < str2[k]){
             return -1; // str1 comes before str2
         } else if (str1[k] > str2[k]) {
@@ -29,7 +29,7 @@ int compare( char const *str1, char const *str2 ){
     }
 
     // shorter string comes befor elonger string
-    if (str[k] == '\0'){
+    if (str1[k] == '\0'){
         return -1; // str 1 comes before so -1
     }else{
         return 1; //only other option now is that str is shorter so its bf fo return 1
@@ -44,6 +44,7 @@ void assign( char *str1, char const *str2 ){
     }
 
 }
+
 unsigned int distance( char const *str1, char const *str2 ){
     // base case
     if (*str1 =='\0'){
@@ -52,6 +53,7 @@ unsigned int distance( char const *str1, char const *str2 ){
             ++lnh;
         }
         return lnh;
+        // i could also just use the length function i used before
     }
     if (*str2 =='\0'){
         int lnh = 0;
@@ -75,6 +77,7 @@ unsigned int distance( char const *str1, char const *str2 ){
     minDis = (ins < minDis) ? ins: minDis;
     minDis = (del < minDis)? del:minDis;
 
+    return minDis+1;
 
 
 }
@@ -87,6 +90,25 @@ std::size_t is_sorted (char* array[], std::size_t capacity){
     }
     return capacity;
 }
+
+void insert(char *array[], std::size_t capacity){
+    char *val = array[capacity -1];
+
+    std::size_t i = capacity -2;
+
+    while ((i>=0) && (compare(array[i], val) > 0)){
+        array [i+1] = array [i]; // shifts string right like one indice
+        if (i == 0){
+            break;
+        }
+
+        i--;
+    }
+
+    array[i+1] = val;
+}
+
+
 int main(){
     char test_string[21] {"Hello WOrld "};
     std::cout << "The length of " << test_string << " is " << length(test_string) << std::endl;
