@@ -43,7 +43,7 @@ void assign( char *str1, char const *str2 ){
         str1[i] = str2[i];
         i++;
     }
-
+    str[i]= '\0';
 }
 
 unsigned int distance( char const *str1, char const *str2 ){
@@ -51,6 +51,7 @@ unsigned int distance( char const *str1, char const *str2 ){
     if (*str1 =='\0'){
         return (length(*str2));
         // i could also just use the length function i used before
+        // i ended up using the length function i wrote
     }
     else if (*str2 =='\0'){
         return (length (*str1));
@@ -85,8 +86,12 @@ std::size_t is_sorted (char* array[], std::size_t capacity){
 }
 
 void insert(char *array[], std::size_t capacity){
-    char *val = array[capacity -1];
+    assert (capacity>0);
 
+    char *val = array[capacity -1];
+    std::size_t length = string_length(array[capacity -1]);
+
+    assign(val, array[capacity-1]);
     std::size_t i = capacity -2;
 
     while ((i>=0) && (compare(array[i], val) > 0)){
@@ -106,6 +111,7 @@ void insertion_sort ( const char *array[], std::size_t capacity){
         // insert every elememnt for inidice 1 to cap -1
         insert (array, i+1)
     }
+    assert(is_sorted(array, capacity));
 }
 
 std::size_t remove_duplicates (char *array[], std::size_t capacity){
@@ -158,6 +164,8 @@ std::size_t find (char * array[], std::size_t capacity, char const *str){
 
     return b_index;
 }
+
+
 int main(){
     char test_string[21] {"Hello WOrld "};
     std::cout << "The length of " << test_string << " is " << length(test_string) << std::endl;
