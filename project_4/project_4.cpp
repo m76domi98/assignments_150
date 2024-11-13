@@ -1,5 +1,7 @@
 #include <iostream>
+#include <fstream>
 #include <cassert>
+
 std::size_t length( char const *a ){
     std::size_t count = 0;
 
@@ -43,18 +45,18 @@ void assign( char *str1, char const *str2 ){
         str1[i] = str2[i];
         i++;
     }
-    str[i]= '\0';
+    str1[i]= '\0';
 }
 
 unsigned int distance( char const *str1, char const *str2 ){
     // base case
     if (*str1 =='\0'){
-        return (length(*str2));
+        return (length(str2));
         // i could also just use the length function i used before
         // i ended up using the length function i wrote
     }
     else if (*str2 =='\0'){
-        return (length (*str1));
+        return (length (str1));
 
     } else if (*str1== *str2){
         return distance (str1+1, str2+1);
@@ -78,7 +80,7 @@ unsigned int distance( char const *str1, char const *str2 ){
 
 std::size_t is_sorted (char* array[], std::size_t capacity){
     for (std::size_t i {1}; i < capacity; i++){
-        if (compare(array[i-1], array[i] > 0)){
+        if (compare(array[i-1], array[i]) > 0) {
             return i;
         }
     }
@@ -89,7 +91,8 @@ void insert(char *array[], std::size_t capacity){
     assert (capacity>0);
 
     char *val = array[capacity -1];
-    std::size_t length = string_length(array[capacity -1]);
+   std::size_t str_length = length(array[capacity -1]);
+
 
     assign(val, array[capacity-1]);
     std::size_t i = capacity -2;
@@ -106,10 +109,11 @@ void insert(char *array[], std::size_t capacity){
     array[i+1] = val;
 }
 
-void insertion_sort ( const char *array[], std::size_t capacity){
+void insertion_sort(char *array[], std::size_t capacity) {
+
     for (std::size_t i =1; i < capacity; ++i){
         // insert every elememnt for inidice 1 to cap -1
-        insert (array, i+1)
+        insert (array, i+1);
     }
     assert(is_sorted(array, capacity));
 }
@@ -140,7 +144,8 @@ bool equalS (const char * str1, const char *str2){
         str1++;
         str2++;
     }
-    return (*str1 == "\0") && (*str2 == "\0");
+    return (*str1 == '\0') && (*str2 == '\0');
+
 }
 
 std::size_t find (char * array[], std::size_t capacity, char const *str){
@@ -165,44 +170,45 @@ std::size_t find (char * array[], std::size_t capacity, char const *str){
     return b_index;
 }
 
-void read_words_from_file(char const *filename, char **&word_array, std::size_t &num_words, std::size_t  width) {
+// void read_words_from_file(char const *filename, char **&word_array, std::size_t &num_words, std::size_t  width) {
 
-    // Attempt to open the file
-    std::ifstream file{ filename };
-    if (!file.is_open()) {
-        std::cout << "[ERROR] " << filename << " not found or could not open file" << std::endl;
-    }
-    assert( file.is_open() );
+//     // Attempt to open the file
+//     std::ifstream file{ filename };
+//     if (!file.is_open()) {
+//         std::cout << "[ERROR] " << filename << " not found or could not open file" << std::endl;
+//     }
+//     assert( file.is_open() );
 
-    // Read the number of words from the first line of the file
-    file >> num_words;
+//     // Read the number of words from the first line of the file
+//     file >> num_words;
 
-    // Ignore the newline '\n' character after the number
-    file.ignore();
+//     // Ignore the newline '\n' character after the number
+//     file.ignore();
 
-    /// Allocate memory and initialize the word array
-    word_array = new char*[num_words]{};                // pointers to individual words
-    word_array[0] = new char[num_words*(width + 1)]{};  // contiguous list of all words
+//     /// Allocate memory and initialize the word array
+//     word_array = new char*[num_words]{};                // pointers to individual words
+//     word_array[0] = new char[num_words*(width + 1)]{};  // contiguous list of all words
 
-    for ( std::size_t k{ 1 }; k < num_words; ++k ) {    // connect the individual word pointers
-        word_array[k] = word_array[k-1] + width + 1;
-    }
+//     for ( std::size_t k{ 1 }; k < num_words; ++k ) {    // connect the individual word pointers
+//         word_array[k] = word_array[k-1] + width + 1;
+//     }
 
 
-    // Read from the file into the word array
-    for ( std::size_t k{ 0 }; k < num_words; ++k ) {
-        file >> word_array[k];
-    }
+//     // Read from the file into the word array
+//     for ( std::size_t k{ 0 }; k < num_words; ++k ) {
+//         file >> word_array[k];
+//     }
 
-    file.close();
-}
+//     file.close();
+// }
 
-void free_word_array(char **word_array){
-    if(word_array){
-        delete[] word_array[0];
-        delete[] word_array;
-    }
-}
+// void free_word_array(char **word_array){
+//     if(word_array){
+//         delete[] word_array[0];
+//         delete[] word_array;
+//     }
+// }
+
 int main() {
     std::size_t const WIDTH{ 20 }; // set the maximum number of letters in a word
      
@@ -210,7 +216,7 @@ int main() {
     std::size_t num_test_words{};   // number of words (will be modified when a file is read)
 
     // populate the word array, and update the number of words
-    read_words_from_file("test_words.txt", test_words, num_test_words, WIDTH );
+    //read_words_from_file("test_words.txt", test_words, num_test_words, WIDTH );
 
       //////////////////////
      // Function Testing //
@@ -249,7 +255,7 @@ int main() {
     /// Insert additional tests as needed
 
     // deallocate
-    free_word_array(test_words);
+    //free_word_array(test_words);
 
     return 0;
 }
