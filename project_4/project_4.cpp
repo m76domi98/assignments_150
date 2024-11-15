@@ -89,29 +89,6 @@ std::size_t is_sorted (char* array[], std::size_t capacity){
 }
 
 void insert(char *array[], std::size_t capacity){
-    // assert (capacity > 0);
-
-    // char *value {array[capacity-1]};
-
-    // std::size_t i {0};
-
-    // for (i = capacity-1; (compare(array[i], value) > 0); --i){
-    //     array[i]= array[i-1];
-    // }
-
-    // array[i]= value;
-
-
-// my version
-//     assert (capacity>0);
-
-//     char *val = array[capacity -1];
-//    std::size_t str_length = length(array[capacity -1]);
-
-
-//     assign(val, array[capacity-1]);
-//     std::size_t i = capacity -2;
-
     assert(is_sorted(array, capacity - 1) == (capacity - 1));
 
     char *val = array[capacity - 1];
@@ -236,3 +213,28 @@ void free_word_array(char **word_array){
 
 //     file.close();
 // }
+
+
+int main() {
+    std::size_t capacity = 5;
+    
+    // Character arrays with proper sizes to hold the strings and the null terminator
+    char str1[4] = "ant";
+    char str2[4] = "ape";
+    char str3[4] = "bat";
+    char str4 [4] = "bat";
+    char str5[4] = "cat";
+
+    // Array of pointers to the strings
+    char *array[5] = { str1, str3, str4,str5, str2 };
+
+    // Call the `insert` function
+    insert(array, capacity);
+
+    // Output the result to check if `insert` works correctly
+    for (std::size_t i = 0; i < capacity; ++i) {
+        std::cout << array[i] << std::endl;
+    }
+
+    return 0;
+}
